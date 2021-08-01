@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Mini Damas</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="Description"
+        content="Juega a las damas online. Reta al ordenador y consigue ganarle en el menor tiempo posible." />
+    <link rel="stylesheet" type="text/css" href="assets/styles/styles.css">
+    <link rel="stylesheet" type="text/css" href="assets/styles/boardStyles.css">
+    <link rel="stylesheet" type="text/css" href="assets/styles/modal.css">
+    <script type="text/javascript" async src="assets/scripts/move.js"></script>
+    <script type="text/javascript" async src="assets/scripts/boardCreation.js"></script>
+    <script type="text/javascript" async src="assets/scripts/app.js"></script>
+    <script type="text/javascript" async src="assets/scripts/modal.js"></script>
+</head>
+
+<body>
+
+    <nav class="topBar">
+        <div class="container">
+            <ul class="title">
+                <li>
+                    <h1><a class="firstNavButton" href="#">Mini Damas</a></h1>
+                </li>
+                <li><a class="navButtons" href="#">Damas</a></li>
+                <li><a class="navButtons" href="#">¿Qué es?</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <ul class="subNav">
+            <li><a href="#">Mini Damas</a></li>
+            <li class="active">Portada</li>
+        </ul>
+
+        <div id="boardContainer">
+
+            <div id="board">
+            </div>
+
+            <div id="turnText">
+            </div>
+
+            <div id="buttonContainer" class="text-center">
+                <button class="button" id="newGameButton">
+                    Nueva partida
+            </div>
+        </div>
+
+    </div>
+
+    <div id="description">
+        <p>
+            Las <strong>damas</strong> es un juego de mesa para dos personas en un tablero de 64 cuadros. El
+            juego consiste en mover las fichas en diagonal sobre los cuadros negros con el objetivo de comer
+            las piezas del contrario saltando sobre ellas.
+        </p>
+        <p>
+            Cada jugador dispone de 12 fichas de un mismo color situadas en las casillas negras más próximas
+            a éste. El objetivo del juego es capturar las fichas del oponente o acorralarlas para que no
+            puedan realizar movimientos.
+        </p>
+        <p>
+            Si no conoces las reglas, sigue leyendo cómo se juega en <a href="javascript:void(0);">Reglas de las
+                damas</a>.
+        </p>
+    </div>
+
+    <div id="contactModal" class="modal">
+
+        <div class="modal-content">
+            <form id="form-modal">
+
+                <div class="modal-header">
+                    <span id="closeModal" class="close">&times;</span>
+                    <h3>Formulario de contacto</h3>
+                </div>
+
+                <div class="modal-body">
+
+                    <input type="text" placeholder="Nombre" class="nombre inputForm" size="5" id="nombre">
+                    <input type="text" placeholder="Apellido" class="apellido inputForm" id="apellido">
+                    <input type="email" placeholder="Email" class="email inputForm" id="email">
+
+                    <textarea placeholder="Comentarios... (máximo 250 palabras)" 
+                              maxlength="250" 
+                              name="comentarios"
+                              id="coments" 
+                              cols="30" 
+                              rows="10" 
+                              class="coment"></textarea>
+                </div>
+                
+                <div class="modal-footer">
+                    <input type="submit" id="sendButton" value="Enviar">
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>
+            <strong>minidamas.com 2021</strong> - Juega a las damas online - <a id="contact"
+                href="javascript:void(0);">Contacto</a>
+        </p>
+    </footer>
+
+</body>
+</html>
