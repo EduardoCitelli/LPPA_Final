@@ -2,13 +2,13 @@ const urlNotAllowed = "./assets/img/notAllowed.png";
 
 function selectCell() {
 
-    if (turn === 0)
+    if (game.turn === 0)
         return;
 
     if (this.classList.contains("selected")) {
 
         this.classList.remove("selected")
-        moveObject = {};
+        game.moveObject = {};
         return;
     }
 
@@ -21,13 +21,13 @@ function selectCell() {
         col = Array.from(rowParent.children)
             .indexOf(this);
 
-    if (Object.keys(moveObject).length === 0) {
+    if (Object.keys(game.moveObject).length === 0) {
 
         let
             isWhite = this.classList.contains("whitePiece"),
             isRed = this.classList.contains("redPiece"),
-            isTurnOne = turn === 1,
-            isTurnTwo = turn === 2;
+            isTurnOne = game.turn === 1,
+            isTurnTwo = game.turn === 2;
 
         if (!isRed && !isWhite) {
             moveNotAllowed(this);
@@ -44,7 +44,7 @@ function selectCell() {
             return;
         }
 
-        moveObject = {
+        game.moveObject = {
             row1: row,
             col1: col
         }
@@ -52,17 +52,17 @@ function selectCell() {
         if (isRed || isWhite)
             this.classList.add("selected");
     }
-    else if (Object.keys(moveObject).length === 2) {
+    else if (Object.keys(game.moveObject).length === 2) {
 
-        moveObject.row2 = row;
-        moveObject.col2 = col;
+        game.moveObject.row2 = row;
+        game.moveObject.col2 = col;
 
         let move = attemptMove(),
             selected = board.getElementsByClassName("selected").item(0);
 
         selected.classList.remove("selected");
 
-        moveObject = {};
+        game.moveObject = {};
 
         if (move) {
             updateBoard();
@@ -97,10 +97,10 @@ function attemptMove() {
 
             removePiece(rowRemover, colRemover);
 
-            if (turn == 1)
-                players.player1.points++;
+            if (game.turn == 1)
+                game.players.player1.points++;
             else
-                players.player2.points++;
+                game.players.player2.points++;
         }
     }
 
@@ -109,7 +109,7 @@ function attemptMove() {
 
 function checkDestination() {
 
-    let cellWithPiece = stateGame[moveObject.row2][moveObject.col2] !== 0;
+    let cellWithPiece = game.stateGame[game.moveObject.row2][game.moveObject.col2] !== 0;
 
     if (cellWithPiece) {
         alert('Elige un lugar que esté vacio');
@@ -121,15 +121,15 @@ function checkDestination() {
 
 function isQueen() {
 
-    let piece = stateGame[moveObject.row1][moveObject.col1];
+    let piece = game.stateGame[game.moveObject.row1][game.moveObject.col1];
     return piece === 3 || piece === 4;
 }
 
 function checkDirection() {
 
     let
-        playerOneWrongDirection = turn === 1 && moveObject.row2 > moveObject.row1,
-        playerTwoWrongDirection = turn === 2 && moveObject.row2 < moveObject.row1;
+        playerOneWrongDirection = game.turn === 1 && game.moveObject.row2 > game.moveObject.row1,
+        playerTwoWrongDirection = game.turn === 2 && game.moveObject.row2 < game.moveObject.row1;
 
     if (playerOneWrongDirection || playerTwoWrongDirection) {
         alert('Ir para la otra dirección');
@@ -142,8 +142,8 @@ function checkDirection() {
 function checkDistance() {
 
     let
-        rowjump = Math.abs(moveObject.row1 - moveObject.row2),
-        coljump = Math.abs(moveObject.col1 - moveObject.col2),
+        rowjump = Math.abs(game.moveObject.row1 - game.moveObject.row2),
+        coljump = Math.abs(game.moveObject.col1 - game.moveObject.col2),
         simpleJump = rowjump === 1 && coljump === 1,
         doubleJumpWithEnemyBetween = rowjump === 2 && coljump === 2 && enemyJumped().length > 0;
 
@@ -158,11 +158,11 @@ function checkDistance() {
 function enemyJumped() {
 
     let
-        middleRow = moveObject.row2 + ((moveObject.row1 - moveObject.row2) / 2),
-        middleCol = moveObject.col2 + ((moveObject.col1 - moveObject.col2) / 2),
-        otherPlayer = turn === 1 ? 2 : 1,
-        otherPlayerQueen = turn === 1 ? 4 : 3;
-        hasEnemyPice = stateGame[middleRow][middleCol] === otherPlayer || stateGame[middleRow][middleCol] === otherPlayerQueen;
+        middleRow = game.moveObject.row2 + ((game.moveObject.row1 - game.moveObject.row2) / 2),
+        middleCol = game.moveObject.col2 + ((game.moveObject.col1 - game.moveObject.col2) / 2),
+        otherPlayer = game.turn === 1 ? 2 : 1,
+        otherPlayerQueen = game.turn === 1 ? 4 : 3;
+        hasEnemyPice = game.stateGame[middleRow][middleCol] === otherPlayer || game.stateGame[middleRow][middleCol] === otherPlayerQueen;
 
     if (hasEnemyPice) {
         enemyPieceJumped.push(middleRow);
@@ -174,21 +174,21 @@ function enemyJumped() {
 
 function makeMove() {
     let piece = queenMe();
-    stateGame[moveObject.row1][moveObject.col1] = 0;
-    stateGame[moveObject.row2][moveObject.col2] = piece;
+    game.stateGame[game.moveObject.row1][game.moveObject.col1] = 0;
+    game.stateGame[game.moveObject.row2][game.moveObject.col2] = piece;
 };
 
 function removePiece(row, col) {
-    stateGame[row][col] = 0;
+    game.stateGame[row][col] = 0;
 };
 
 function queenMe() {
 
-    if (turn === 1 && moveObject.row2 == 0)
+    if (game.turn === 1 && game.moveObject.row2 == 0)
         return 3;
 
-    if (turn === 2 && moveObject.row2 == 7)
+    if (game.turn === 2 && game.moveObject.row2 == 7)
         return 4;
 
-    return stateGame[moveObject.row1][moveObject.col1];
+    return game.stateGame[game.moveObject.row1][game.moveObject.col1];
 }

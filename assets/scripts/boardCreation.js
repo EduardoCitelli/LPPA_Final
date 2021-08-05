@@ -1,11 +1,19 @@
 var enemyPieceJumped = [],
-    stateGame;
+    game = {
+        stateGame: [[]],
+        players: {
+            player1: {},
+            player2: {}
+        },
+        moveObject: {},
+        turn: 0
+    };
 
 const board = document.getElementById("board");
 
 function defaultState() {
 
-    stateGame = [
+    game.stateGame = [
         [0, 2, 0, 2, 0, 2, 0, 2],
         [2, 0, 2, 0, 2, 0, 2, 0],
         [0, 2, 0, 2, 0, 2, 0, 2],
@@ -21,7 +29,7 @@ function createBoard() {
 
     board.innerHTML = "";
 
-    stateGame.forEach(function (row) {
+    game.stateGame.forEach(function (row) {
 
         let rowElement = createRow();
 

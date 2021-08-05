@@ -117,6 +117,7 @@ a {
     margin: 2rem 0 0 0 ;
     background: linear-gradient(to right, #412fb7, #231a60);
     color: greenyellow;
+    text-transform: capitalize;
 }
 
 .table-points {
@@ -134,6 +135,7 @@ a {
 .table-players {
     flex: auto;
     text-align: center;
+    text-transform: capitalize;
 }
 
 .table-players tr:first-child th:first-child {

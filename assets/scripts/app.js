@@ -1,7 +1,5 @@
 
-var turn = 0,
-    moveObject,
-    players;
+var scoreBoard;
 
 const tablePlayer = document.getElementById('points'),
       turnElement = document.getElementById("turnText"),
@@ -14,7 +12,10 @@ const tablePlayer = document.getElementById('points'),
       namePlayer2 = document.getElementById("player2-name"),
       closeName = document.getElementById("closeModalPlayer"),
       name1 = document.getElementById("name-1"),
-      name2 = document.getElementById("name-2");
+      name2 = document.getElementById("name-2"),
+      gameSavedKey = "game-saved",
+      saveGameButton = document.getElementById("save-game"),
+      loadGameButton = document.getElementById("load-game");
 
 window.onload = async () => InitializeBoard();
 
@@ -30,6 +31,8 @@ async function InitializeBoard() {
 
     newGameButton.addEventListener("click", showModalNames);
     saveName.addEventListener("click", InitializeTurn);
+    saveGameButton.addEventListener("click", saveGame);
+    loadGameButton.addEventListener("click", loadGame);
 }
 
 function showModalNames() {
@@ -54,9 +57,9 @@ function InitializeTurn(event) {
         return;
     }
 
-    turn = 1;
+    game.turn = 1;
 
-    players = {
+    game.players = {
         player1: {
             name: namePlayer1.value,
             points: 0
@@ -71,6 +74,7 @@ function InitializeTurn(event) {
 
     turnElement.classList.add('turn-container');
     tablePlayer.style.display = "flex";
+    saveGameButton.style.display = "flex";
 
     setNames();
 
@@ -82,9 +86,21 @@ function InitializeTurn(event) {
 }
 
 function newBoard() {
-    moveObject = {};
     defaultState();
     createBoard();
+}
+
+function clearBoard() {
+    game.moveObject = {};
+    game.turn = 0;
+
+    tablePlayer.style.display = "none";
+    saveGameButton.style.display = "none";
+
+    ClearTurnElement();
+    turnElement.classList.remove('turn-container');
+
+    newBoard();
 }
 
 function updateBoard() {
@@ -94,11 +110,23 @@ function updateBoard() {
 
 function checkTurn() {
 
-    turn = turn === 1 ? 2 : 1;
+    if (checkWinner()){
+
+        let winner = game.turn === 1 ? game.players.player1 : game.players.player2;
+        alert(`Felicidades ${winner.name} eres el ganador`);
+        clearBoard();
+        return;
+    }
+
+    game.turn = game.turn === 1 ? 2 : 1;
 
     ClearTurnElement();
 
     createAndAppendTurnText();
+}
+
+function checkWinner() {
+    return game.players.player1.points === 12 || game.players.player2.points === 12;
 }
 
 function ClearTurnElement() {
@@ -107,8 +135,8 @@ function ClearTurnElement() {
 
 function createAndAppendTurnText() {
 
-    var color = turn === 1 ? "rojas" : "blancas";
-    var name = turn === 1 ? players.player1.name : players.player2.name;
+    var color = game.turn === 1 ? "rojas" : "blancas";
+    var name = game.turn === 1 ? game.players.player1.name : game.players.player2.name;
 
     var textElement = document.createElement("h2");
     textElement.innerText = `Turno jugador: ${name} (${color})`;
@@ -120,16 +148,42 @@ function createAndAppendTurnText() {
 
 function updatePoints() {
 
-    if (Object.keys(players).length > 0) {
-        points1.innerText = `${players.player1.points} ptos`;
-        points2.innerText = `${players.player2.points} ptos`;
+    if (Object.keys(game.players).length > 0) {
+        points1.innerText = `${game.players.player1.points} ptos`;
+        points2.innerText = `${game.players.player2.points} ptos`;
     }
 }
 
 function setNames() {
 
-    if (Object.keys(players).length > 0) {
-        name1.innerText = players.player1.name;
-        name2.innerText = players.player2.name;
+    if (Object.keys(game.players).length > 0) {
+        name1.innerText = game.players.player1.name;
+        name2.innerText = game.players.player2.name;
     }
+}
+
+function saveGame() {
+    localStorage.setItem(gameSavedKey, JSON.stringify(game));
+}
+
+function loadGame() {
+
+    let loadedGame = JSON.parse(localStorage.getItem(gameSavedKey));
+
+    if (!loadedGame){
+        alert("No hay partidas guardadas");
+        return;
+    }
+
+    game = loadedGame;
+
+    ClearTurnElement();
+
+    turnElement.classList.add('turn-container');
+    tablePlayer.style.display = "flex";
+    saveGameButton.style.display = "flex";
+
+    setNames();
+    createAndAppendTurnText();
+    updateBoard();
 }

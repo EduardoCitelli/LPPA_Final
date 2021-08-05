@@ -26,6 +26,7 @@
 #board .selected {
     background-color: #074F7F;
     -webkit-box-shadow: 0 0 10px 7px #5b04d6;
+    box-shadow: 0 0 10px 7px #5b04d6;
 }
 
 .board_row:nth-child(odd) .checkersSquare:nth-child(odd),
