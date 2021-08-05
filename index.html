@@ -4,70 +4,108 @@
 <head>
     <title>Mini Damas</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="Description"
-        content="Juega a las damas online. Reta al ordenador y consigue ganarle en el menor tiempo posible." />
+    <meta name="Description" content="Juega a las damas online." />
     <link rel="stylesheet" type="text/css" href="assets/styles/styles.css">
     <link rel="stylesheet" type="text/css" href="assets/styles/boardStyles.css">
     <link rel="stylesheet" type="text/css" href="assets/styles/modal.css">
-    <script type="text/javascript" async src="assets/scripts/move.js"></script>
-    <script type="text/javascript" async src="assets/scripts/boardCreation.js"></script>
-    <script type="text/javascript" async src="assets/scripts/app.js"></script>
-    <script type="text/javascript" async src="assets/scripts/modal.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
+    <script type="text/javascript" src="assets/scripts/boardCreation.js" async></script>
+    <script type="text/javascript" src="assets/scripts/move.js" async></script>
+    <script type="text/javascript" src="assets/scripts/modal.js" async></script>
+    <script type="text/javascript" src="assets/scripts/app.js" async></script>
 </head>
 
 <body>
 
-    <nav class="topBar">
+    <nav class="nav-bar">
         <div class="container">
-            <ul class="title">
-                <li>
-                    <h1><a class="firstNavButton" href="#">Mini Damas</a></h1>
-                </li>
-                <li><a class="navButtons" href="#">Damas</a></li>
-                <li><a class="navButtons" href="#">¿Qué es?</a></li>
-            </ul>
+            <div class="logo">
+                <a href="index.html">
+                    <img class="logo-image" src="assets/img/BMG-logo.webp" alt="">
+                </a>
+            </div>
+            <div class="menu">
+                <ul class="menu-list">
+                    <li class="menu-item">
+                        <a class="menu-link" href="index.html">Home</a>
+                    </li>
+                    <li class="menu-item">
+                        <a class="menu-link" href="index.html">Tablero</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
 
-    <div class="container">
-
-        <ul class="subNav">
-            <li><a href="#">Mini Damas</a></li>
-            <li class="active">Portada</li>
-        </ul>
+    <div class="container main">
 
         <div id="boardContainer">
-
-            <div id="board">
-            </div>
 
             <div id="turnText">
             </div>
 
-            <div id="buttonContainer" class="text-center">
+            <div id="points" class="table-points" style="display: none;">
+                <table class="table-players">
+                    <thead>
+                        <tr>
+                            <th id="name-1"></th>
+                            <th id="name-2"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td id="points-1"></td>
+                            <td id="points-2"></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+            <div id="board">
+            </div>
+
+            <div class="text-center buttonContainer">
                 <button class="button" id="newGameButton">
                     Nueva partida
+                </button>
             </div>
+            <div class="text-center buttonContainer">
+
+                <button class="button">
+                    Guardar Partida
+                </button>
+
+                <button class="button">
+                    Cargar Partida
+                </button>
+
+            </div>
+        </div>
+
+        <div class="description">
+            <p>
+                Las <strong>damas</strong> es un juego de mesa para dos personas en un tablero de 64 cuadros. El
+                juego consiste en mover las fichas en diagonal sobre los cuadros negros con el objetivo de comer
+                las piezas del contrario saltando sobre ellas.
+            </p>
+            <p>
+                Cada jugador dispone de 12 fichas de un mismo color situadas en las casillas negras más próximas
+                a éste. El objetivo del juego es capturar las fichas del oponente o acorralarlas para que no
+                puedan realizar movimientos.
+            </p>
+            <p>
+                Si no conoces las reglas, sigue leyendo cómo se juega en <a href="https://es.wikipedia.org/wiki/Damas"
+                    target="_blank">Reglas de las
+                    damas</a>.
+            </p>
         </div>
 
     </div>
 
-    <div id="description">
-        <p>
-            Las <strong>damas</strong> es un juego de mesa para dos personas en un tablero de 64 cuadros. El
-            juego consiste en mover las fichas en diagonal sobre los cuadros negros con el objetivo de comer
-            las piezas del contrario saltando sobre ellas.
-        </p>
-        <p>
-            Cada jugador dispone de 12 fichas de un mismo color situadas en las casillas negras más próximas
-            a éste. El objetivo del juego es capturar las fichas del oponente o acorralarlas para que no
-            puedan realizar movimientos.
-        </p>
-        <p>
-            Si no conoces las reglas, sigue leyendo cómo se juega en <a href="javascript:void(0);">Reglas de las
-                damas</a>.
-        </p>
-    </div>
+
 
     <div id="contactModal" class="modal">
 
@@ -85,28 +123,46 @@
                     <input type="text" placeholder="Apellido" class="apellido inputForm" id="apellido">
                     <input type="email" placeholder="Email" class="email inputForm" id="email">
 
-                    <textarea placeholder="Comentarios... (máximo 250 palabras)" 
-                              maxlength="250" 
-                              name="comentarios"
-                              id="coments" 
-                              cols="30" 
-                              rows="10" 
-                              class="coment"></textarea>
+                    <textarea placeholder="Comentarios... (máximo 250 palabras)" maxlength="250" name="comentarios"
+                        id="coments" cols="30" rows="10" class="coment"></textarea>
                 </div>
-                
+
                 <div class="modal-footer">
-                    <input type="submit" id="sendButton" value="Enviar">
+                    <input type="submit" class="button" id="sendButton" value="Enviar">
                 </div>
             </form>
         </div>
     </div>
 
+    <div id="modal-players" class="modal">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <span id="closeModalPlayer" class="close">&times;</span>
+                <h3>Elige el nombre de los jugadores</h3>
+            </div>
+
+            <div class="modal-body">
+                <input type="text" placeholder="Jugador 1" class="nombre inputForm" size="5" id="player1-name">
+                <input type="text" placeholder="Jugador 2" class="nombre inputForm" id="player2-name">
+            </div>
+
+            <div class="modal-footer">
+                <input type="button" class="button" id="save-names" value="Guardar">
+            </div>
+
+
+        </div>
+    </div>
+
     <footer class="footer">
         <p>
-            <strong>minidamas.com 2021</strong> - Juega a las damas online - <a id="contact"
-                href="javascript:void(0);">Contacto</a>
+            <strong>Copyright ©</strong> - 2021 Todos los derechos reservados - Hecho por <strong>Eduardo
+                Citelli</strong> - <a id="contact" href="javascript:void(0);">Contacto</a>
         </p>
     </footer>
 
 </body>
+
 </html>

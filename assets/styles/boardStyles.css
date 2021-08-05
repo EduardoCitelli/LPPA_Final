@@ -1,16 +1,20 @@
 #boardContainer {
     width: 490px;
-    position: relative;
+    /* width: 490px; */
+    display: flex;
+    flex-direction: column;
     margin-left: auto;
     margin-right: auto;
 }
 
 #board {
     border: 5px solid #999999;
-    position: relative;
+    display: flex;
     z-index: 0;
     margin-top: 45px;
-    height: 480px;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    margin-bottom: 45px;
 }
 
 #board .checkersSquare {
@@ -21,20 +25,18 @@
 
 #board .selected {
     background-color: #074F7F;
-    -webkit-box-shadow: 0 0 10px 7px #5aade6;
+    -webkit-box-shadow: 0 0 10px 7px #5b04d6;
 }
 
 .board_row:nth-child(odd) .checkersSquare:nth-child(odd),
 .board_row:nth-child(even) .checkersSquare:nth-child(even) {
   background: -moz-linear-gradient(center top, #eeeeee, #ffffff) repeat scroll 0 0 transparent;
-  /* background: -webkit-gradient(linear, center bottom, center top, from(#ffffff), to(#eeeeee)); */
   background-color: white;
 }
 
 .board_row:nth-child(even) .checkersSquare:nth-child(odd),
 .board_row:nth-child(odd) .checkersSquare:nth-child(even) {
   background: -moz-linear-gradient(center top, #222222, #333333) repeat scroll 0 0 transparent;
-  /* background: -webkit-gradient(linear, center bottom, center top, from(#333333), to(#222222)); */
   background-color: black;
 }
 
@@ -49,4 +51,10 @@
 
 .whitePiece {
   background-image: url(../img/white-piece.png);
+}
+
+.queen {
+  border: 5px solid gold;
+  box-sizing: border-box;
+  border-radius: 100%;
 }

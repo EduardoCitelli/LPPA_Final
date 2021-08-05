@@ -1,4 +1,4 @@
-var modal = document.getElementById("contactModal"),
+const modal = document.getElementById("contactModal"),
 
     contactElement = document.getElementById("contact"),
 

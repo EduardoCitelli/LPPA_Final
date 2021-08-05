@@ -34,7 +34,6 @@ Si los puntos requeridos y deseables se desarrollan correctamente, la nota es un
 - Usar nombres apropiados para clases, ids, archivos, commits, etc.
 - Eliminar código html o CSS que no sea utilizado.
 - Utilizar etiquetas HTML correspondientes para cada caso.
-- ¡¡No copiar y pegar ejemplos porque el profesor se da cuenta!!
 
 ## Autor
 
@@ -42,12 +41,12 @@ Si los puntos requeridos y deseables se desarrollan correctamente, la nota es un
 
 ## Ver
 
-- [Ver Proyecto](https://eduardocitelli.github.io/01_TP_Lppa_EduardoCitelli/)
+- [Ver Proyecto](https://eduardocitelli.github.io/LPPA_Final/)
 
 # Set up
 
 ```console
 $ cd to/some/folder
-$ git clone https://github.com/EduardoCitelli/01_TP_Lppa_EduardoCitelli.git
+$ git clone https://github.com/EduardoCitelli/LPPA_Final.git
 $ cd 01_TP_Lppa_EduardoCitelli
 $ git checkout develop

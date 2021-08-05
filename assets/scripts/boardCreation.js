@@ -1,3 +1,8 @@
+var enemyPieceJumped = [],
+    stateGame;
+
+const board = document.getElementById("board");
+
 function defaultState() {
 
     stateGame = [
@@ -14,7 +19,6 @@ function defaultState() {
 
 function createBoard() {
 
-    let board = document.getElementById("board");
     board.innerHTML = "";
 
     stateGame.forEach(function (row) {
@@ -54,8 +58,13 @@ function createCell() {
 
 function checkPieceType(cell, cellElement) {
 
-    let pieceType = cell === 1 ? "redPiece" : cell === 2 ? "whitePiece" : "";
+    let pieceType = cell === 1 || cell === 3 ? "redPiece" : cell === 2 || cell === 4 ? "whitePiece" : "";
+    let isQueen = cell === 3 || cell === 4 ? "queen" : "";
 
     if (pieceType.length > 0)
         cellElement.classList.add(pieceType);
+
+    if (isQueen.length > 0)
+        cellElement.classList.add(isQueen);
+    
 }
