@@ -232,9 +232,10 @@ a {
 
 .footer {
     margin-top: 0.5rem;
-    padding: 30px 0;
+    padding: 1rem 0;
     border-top: var(--border-menu);
     background: var(--bar-color);
+    display: flex;
 }
 
 .footer p {
@@ -264,4 +265,9 @@ a {
   
   ::-webkit-scrollbar-thumb:hover {
     background: var(--hover-color); 
+  }
+
+  .github {
+      margin-left: auto;
+      margin-right: 1rem;
   }
