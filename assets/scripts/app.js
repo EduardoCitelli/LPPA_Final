@@ -17,6 +17,7 @@ async function InitializeBoard() {
     initializeScoreBoardElements();
     initializeNewGameElements();
     initializeIndexElements();
+    initializeMassageModal();
 }
 
 function initializeIndexElements() {
@@ -30,13 +31,13 @@ function InitializeTurn(event) {
     event.preventDefault();
 
     if (namePlayer1.value.length <= 0) {
-        alert("Escribir el Nombre del jugador 1");
+        showMessageModal("Escribir el Nombre del jugador 1");
         namePlayer1.focus();
         return;
     }
 
     if (namePlayer2.value.length <= 0) {
-        alert("Escribir el Nombre del jugador 2");
+        showMessageModal("Escribir el Nombre del jugador 2");
         namePlayer2.focus();
         return;
     }
@@ -105,7 +106,7 @@ async function checkTurn(isLoadGame) {
             loser = game.players.player1;
         }
         setTimeout(() => {
-            alert(`Felicidades ${winner.name} eres el ganador`);
+            showMessageModal(`Felicidades ${winner.name} eres el ganador`);
             clearBoard();
             saveScore(winner, loser);
         }, 100);
@@ -161,10 +162,7 @@ function setNames() {
 function saveGame() {
 
     saveGameLocal();
-
-    setTimeout(() => {
-        alert("Juego Guardado");
-    }, 100);
+    showMessageModal("Juego Guardado");
 }
 
 function loadGame() {
@@ -172,7 +170,7 @@ function loadGame() {
     let loadedGame = loadGameLocal();
 
     if (!loadedGame) {
-        alert("No hay partidas guardadas");
+        showMessageModal("No hay partidas guardadas");
         return;
     }
 
@@ -188,9 +186,7 @@ function loadGame() {
     createAndAppendTurnText();
     updateBoard(true);
 
-    setTimeout(() => {
-        alert('Juego Cargado');
-    }, 100);
+    showMessageModal('Juego Cargado');
 }
 
 function saveScore(winner, loser) {

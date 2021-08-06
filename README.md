@@ -42,9 +42,11 @@ Este proyecto será utilizado para rendir el examen final de la materia Lenguaje
 - Diseño responsivo, estética del juego y de la web (usando Flexbox). 
 - Juego completamente funcional para dos jugadores permitiendo ingresar nombres de los jugadores al iniciar la partida.
 - Agregar funcionalidad de guardar y cargar partida en el juego usando LocalStorage. 
-- Agregar puntaje por cada ficha comida y mostrar los puntos. ● Detectar el momento en que un jugador ha ganado la partida y mostrar un cartel informativo. 
+- Agregar puntaje por cada ficha comida y mostrar los puntos. 
+- Detectar el momento en que un jugador ha ganado la partida y mostrar un cartel informativo. 
 - Detectar el momento en que no hay más movimientos posibles y mostrar un cartel de empate. 
-- Crear una página de Contacto, con un formulario que permita ingresar nombre, mail y mensaje, y al enviar se abra la herramienta de envío de emails predeterminada del sistema operativo. ● Validaciones del formulario de contacto (nombre alfanumérico, mail válido y mensaje con más de 5 caracteres).
+- Crear una página de Contacto, con un formulario que permita ingresar nombre, mail y mensaje, y al enviar se abra la herramienta de envío de emails predeterminada del sistema operativo. 
+- Validaciones del formulario de contacto (nombre alfanumérico, mail válido y mensaje con más de 5 caracteres).
 
 ### Deseable <a name = "plus"></a>
 

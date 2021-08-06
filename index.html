@@ -16,6 +16,7 @@
     <script type="text/javascript" src="assets/scripts/boardCreation.js" async></script>
     <script type="text/javascript" src="assets/scripts/modalScoreBoard.js" async></script>
     <script type="text/javascript" src="assets/scripts/modalNewGame.js" async></script>
+    <script type="text/javascript" src="assets/scripts/modalMessage.js" async></script>
     <script type="text/javascript" src="assets/scripts/storage.js" async></script>
     <script type="text/javascript" src="assets/scripts/move.js" async></script>
     <script type="text/javascript" src="assets/scripts/modal.js" async></script>
@@ -160,7 +161,6 @@
     </div>
 
     <div id="modal-score-board" class="modal">
-
         <div class="modal-content">
 
             <div class="modal-header">
@@ -190,6 +190,26 @@
                 <input type="button" class="button" id="acept-button" value="Aceptar">
             </div>
 
+        </div>
+    </div>
+
+    <div id="message-modal" class="modal">
+    
+        <div class="modal-content">
+            <div class="modal-header">
+                <span id="close-modal-message" class="close">&times;</span>
+                <h3>Mensaje</h3>
+            </div>
+    
+            <div class="modal-body">
+                <h2 id="message-body">
+    
+                </h2>
+            </div>
+    
+            <div class="modal-footer">
+                <input type="button" class="button" id="message-button" value="Aceptar">
+            </div>
         </div>
     </div>
 

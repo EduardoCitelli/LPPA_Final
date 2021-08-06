@@ -276,3 +276,7 @@ a {
       margin-left: 1rem;
       cursor: pointer;
   }
+
+  #message-body {
+      color: greenyellow;
+  }

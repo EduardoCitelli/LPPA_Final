@@ -30,25 +30,25 @@ async function SendInfo(event) {
     event.preventDefault();
 
     if (nameElement.value.length <= 0) {
-        alert("Debe Escribir un nombre");
+        showMessageModal("Debe Escribir un nombre");
         nameElement.focus();
         return;
     }
 
     if (lastNameElement.value.length <= 0) {
-        alert("Debe Escribir un apellido");
+        showMessageModal("Debe Escribir un apellido");
         lastNameElement.focus();
         return;
     }
 
     if (emailElement.value.length <= 0) {
-        alert("Debe Escribir un email valido");
+        showMessageModal("Debe Escribir un email valido");
         emailElement.focus();
         return;
     }
 
     if (coments.value.length <= 5) {
-        alert("Debe Escribir un comentario con mas de 5 caracteres");
+        showMessageModal("Debe Escribir un comentario con mas de 5 caracteres");
         coments.focus();
         return;
     }
