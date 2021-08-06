@@ -1,7 +1,7 @@
 
-var scoreBoard;
-
-const tablePlayer = document.getElementById('points'),
+const gameSavedKey = "game-saved",
+      scoreBoardKey = "score-board",
+      tablePlayer = document.getElementById('points'),
       turnElement = document.getElementById("turnText"),
       newGameButton = document.getElementById("newGameButton"),
       points1 = document.getElementById("points-1"),
@@ -13,16 +13,26 @@ const tablePlayer = document.getElementById('points'),
       closeName = document.getElementById("closeModalPlayer"),
       name1 = document.getElementById("name-1"),
       name2 = document.getElementById("name-2"),
-      gameSavedKey = "game-saved",
       saveGameButton = document.getElementById("save-game"),
-      loadGameButton = document.getElementById("load-game");
+      loadGameButton = document.getElementById("load-game"),
+      modalScoreBoard = document.getElementById("modal-score-board"),
+      openScoreBoardButton = document.getElementById("board-score-button"),
+      closeScoreBoardButton = document.getElementById("close-modal-score-board"),
+      aceptScoreBoardButton = document.getElementById("acept-button"),
+      bodyScoreBoard = document.getElementById("body-score-board");
 
 window.onload = async () => InitializeBoard();
 
 closeName.onclick = closeModalPlayers;
+closeScoreBoardButton.onclick = closeModalScoreBoard;
+aceptScoreBoardButton.onclick = closeModalScoreBoard;
 
 function closeModalPlayers() {
     modalPlayers.style.display = "none";
+}
+
+function closeModalScoreBoard() {
+    modalScoreBoard.style.display = "none";
 }
 
 async function InitializeBoard() {
@@ -33,6 +43,7 @@ async function InitializeBoard() {
     saveName.addEventListener("click", InitializeTurn);
     saveGameButton.addEventListener("click", saveGame);
     loadGameButton.addEventListener("click", loadGame);
+    openScoreBoardButton.addEventListener("click", showModalScoreBoard);
 }
 
 function showModalNames() {
@@ -41,17 +52,57 @@ function showModalNames() {
     modalPlayers.style.display = "block";
 }
 
+function showModalScoreBoard() {
+
+    bodyScoreBoard.innerHTML = "";
+    let scoreBoard = [];
+
+    if (getScoreBoard()){
+        scoreBoard = getScoreBoard();
+    }
+
+    scoreBoard.forEach(score => {
+
+        let rowTable = createRowTable();
+
+        for (let property in score) {
+
+            let appendElement = score[property];
+
+            let cellTable = createCelltable(appendElement);
+            rowTable.appendChild(cellTable);
+        }
+
+        bodyScoreBoard.appendChild(rowTable);
+    });
+
+    modalScoreBoard.style.display = "block";
+}
+
+function createRowTable() {
+    let row = document.createElement("tr");
+    return row;
+}
+
+function createCelltable(appendElement) {
+
+    let cell = document.createElement("td");
+    cell.innerText = appendElement;
+
+    return cell;
+}
+
 function InitializeTurn(event) {
 
     event.preventDefault();
 
-    if (namePlayer1.value.length <= 0){
+    if (namePlayer1.value.length <= 0) {
         alert("Escribir el Nombre del jugador 1");
         namePlayer1.focus();
         return;
     }
 
-    if (namePlayer2.value.length <= 0){
+    if (namePlayer2.value.length <= 0) {
         alert("Escribir el Nombre del jugador 2");
         namePlayer2.focus();
         return;
@@ -90,7 +141,7 @@ function newBoard() {
     createBoard();
 }
 
-function clearBoard() {
+async function clearBoard() {
     game.moveObject = {};
     game.turn = 0;
 
@@ -103,18 +154,31 @@ function clearBoard() {
     newBoard();
 }
 
-function updateBoard() {
-    createBoard();
-    checkTurn();
+async function updateBoard() {
+    await createBoard();
+    await checkTurn();
 }
 
-function checkTurn() {
+async function checkTurn() {
 
-    if (checkWinner()){
+    if (checkWinner()) {
 
-        let winner = game.turn === 1 ? game.players.player1 : game.players.player2;
-        alert(`Felicidades ${winner.name} eres el ganador`);
-        clearBoard();
+        let winner, loser;
+
+        if (game.turn === 1){
+            winner = game.players.player1;
+            loser = game.players.player2;
+        }
+        else {
+            winner = game.players.player2;
+            loser = game.players.player1;
+        }
+        setTimeout(() => {
+            alert(`Felicidades ${winner.name} eres el ganador`);
+            clearBoard();
+            saveScore(winner, loser);
+        }, 100);
+
         return;
     }
 
@@ -163,14 +227,19 @@ function setNames() {
 }
 
 function saveGame() {
+
     localStorage.setItem(gameSavedKey, JSON.stringify(game));
+
+    setTimeout(() => {
+        alert("Juego Guardado");
+    }, 100);
 }
 
 function loadGame() {
 
     let loadedGame = JSON.parse(localStorage.getItem(gameSavedKey));
 
-    if (!loadedGame){
+    if (!loadedGame) {
         alert("No hay partidas guardadas");
         return;
     }
@@ -186,4 +255,33 @@ function loadGame() {
     setNames();
     createAndAppendTurnText();
     updateBoard();
+
+    setTimeout(() => {
+        alert('Juego Cargado');
+    }, 100);
+}
+
+function saveScore(winner, loser) {
+
+    let score = {
+        date: new Date().toLocaleString(),
+        winner: winner.name,
+        winnerPoints: winner.points,
+        loser: loser.name,
+        loserPoints: loser.points
+    };
+
+    let scoreBoard = [];
+
+    if (getScoreBoard()){
+        scoreBoard = getScoreBoard();
+    }
+
+    scoreBoard.push(score);
+
+    localStorage.setItem(scoreBoardKey, JSON.stringify(scoreBoard));
+}
+
+function getScoreBoard(){
+    return JSON.parse(localStorage.getItem(scoreBoardKey));
 }

@@ -25,7 +25,8 @@ function defaultState() {
     ];
 }
 
-function createBoard() {
+async function createBoard() {
+
 
     board.innerHTML = "";
 
@@ -46,6 +47,7 @@ function createBoard() {
 
         board.appendChild(rowElement);
     });
+
 }
 
 function createRow() {

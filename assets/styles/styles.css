@@ -162,7 +162,7 @@ a {
 }
 
 .table-players tr:nth-child(even) {
-    background-color: #f2f2f2;
+    background-color: #6843cc;
 }
 
 .table-players tr:hover {
@@ -247,3 +247,21 @@ a {
 #turnText {
     text-align: center;
 }
+
+::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey; 
+    border-radius: 10px;
+  }
+   
+  ::-webkit-scrollbar-thumb {
+    background: var(--bar-color); 
+    border-radius: 100%;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--hover-color); 
+  }

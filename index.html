@@ -32,7 +32,7 @@
                         <a class="menu-link" href="index.html">Home</a>
                     </li>
                     <li class="menu-item">
-                        <a class="menu-link" href="index.html">Tablero</a>
+                        <a class="menu-link" id="board-score-button" href="javascript:void(0);">Tablero</a>
                     </li>
                 </ul>
             </div>
@@ -61,7 +61,6 @@
                         </tr>
                     </tbody>
                 </table>
-
             </div>
 
             <div id="board">
@@ -152,6 +151,39 @@
                 <input type="button" class="button" id="save-names" value="Guardar">
             </div>
 
+        </div>
+    </div>
+
+    <div id="modal-score-board" class="modal">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <span id="close-modal-score-board" class="close">&times;</span>
+                <h3>Tabla de posiciones</h3>
+            </div>
+
+            <div class="modal-body">
+                <div class="table-points">
+                    <table class="table-players">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Ganador</th>
+                                <th>Puntaje</th>
+                                <th>Perdedor</th>
+                                <th>Puntaje</th>
+                            </tr>
+                        </thead>
+                        <tbody id="body-score-board">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <input type="button" class="button" id="acept-button" value="Aceptar">
+            </div>
 
         </div>
     </div>
