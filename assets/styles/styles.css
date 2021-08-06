@@ -280,3 +280,7 @@ a {
   #message-body {
       color: greenyellow;
   }
+
+  #message-modal-content {
+      min-width: 25rem;
+  }
