@@ -1,21 +1,12 @@
 const modal = document.getElementById("contactModal"),
-
     contactElement = document.getElementById("contact"),
-
     closeElement = document.getElementById("closeModal"),
-
     inputs = document.getElementsByClassName("inputForm"),
-
     formModal = document.getElementById("form-modal"),
-
     nameElement = document.getElementById("nombre"),
-
     lastNameElement = document.getElementById("apellido"),
-
     emailElement = document.getElementById("email"),
-
     coments = document.getElementById("coments"),
-
     sendButton = document.getElementById("sendButton");
 
 contactElement.onclick = function () {
@@ -50,43 +41,23 @@ async function SendInfo(event) {
         return;
     }
 
-    if (email.value.length <= 0) {
+    if (emailElement.value.length <= 0) {
         alert("Debe Escribir un email valido");
         emailElement.focus();
         return;
     }
 
-    if (coments.value.length <= 0) {
-        alert("Debe Escribir un comentario");
-        nameElement.focus();
+    if (coments.value.length <= 5) {
+        alert("Debe Escribir un comentario con mas de 5 caracteres");
+        coments.focus();
         return;
     }
 
-    let data = {
-        name: nameElement.value,
-        lastName: lastNameElement.value,
-        email: emailElement.value,
-        comentaries: coments.value,
-        userId: 1
-    }
+    let mailTo = `mailto:${emailElement.value}?subject=${nameElement.value} ${lastNameElement.value}&body=${coments.value}.`;
 
-    let header = {
-        'Content-type': 'application/json; charset=UTF-8'
-    }
+    window = window.open(mailTo, 'emailWindow');
 
-    await fetch('https://jsonplaceholder.typicode.com/posts', {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: header
-    })
-        .then(response => response.json())
-        .then(element => {
-
-            let message = `Comentario Enviado, Muchas Gracias\n${element.lastName}, ${element.name}.`
-            alert(message);
-        });
-
-    this.submit();
+    modal.style.display = "none";
 }
 
 function cleanModal() {

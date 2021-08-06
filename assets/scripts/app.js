@@ -1,3 +1,52 @@
+// var TableSorter = {
+//     makeSortable: function(table){
+
+//         var _this = this;
+
+//         var th = table.tHead, i;
+
+//         th && (th = th.rows[0]) && (th = th.cells);
+
+//         if (th)
+//             i = th.length;
+//         else
+//             return;        
+
+//         while (--i >= 0) (function (i) {
+
+//             var dir = 1;
+
+//             th[i].addEventListener('click', function () {
+//                 _this._sort(table, i, (dir = 1 - dir));
+//             });
+//         }(i));
+//     },
+//     _sort: function (table, col, reverse) {
+//         var tb = table.tBodies[0],
+//         tr = Array.prototype.slice.call(tb.rows, 0),
+//         i;
+
+//         reverse = -((+reverse) || -1);
+
+//         tr = tr.sort(function (a, b) {
+
+//             return reverse * (
+
+//                 a.cells[col].textContent.trim().localeCompare(
+//                     b.cells[col].textContent.trim()
+//                 )
+//             );
+//         });
+
+//         for(i = 0; i < tr.length; ++i){
+//             tb.appendChild(tr[i]);
+//         }
+//     }
+// };
+
+var isHigherDate = false,
+    isHigherLoser = false,
+    isHigherWinner = false;
 
 const gameSavedKey = "game-saved",
       scoreBoardKey = "score-board",
@@ -19,7 +68,11 @@ const gameSavedKey = "game-saved",
       openScoreBoardButton = document.getElementById("board-score-button"),
       closeScoreBoardButton = document.getElementById("close-modal-score-board"),
       aceptScoreBoardButton = document.getElementById("acept-button"),
-      bodyScoreBoard = document.getElementById("body-score-board");
+      bodyScoreBoard = document.getElementById("body-score-board"),
+      tableScoreBoard = document.getElementById("score-board-table"),
+      headDate = document.getElementById("head-date"),
+      headWinner = document.getElementById("head-winner-points"),
+      headLoser = document.getElementById("head-loser-points");
 
 window.onload = async () => InitializeBoard();
 
@@ -35,7 +88,7 @@ function closeModalScoreBoard() {
     modalScoreBoard.style.display = "none";
 }
 
-async function InitializeBoard() {
+async function InitializeBoard() {   
 
     newBoard();
 
@@ -44,6 +97,10 @@ async function InitializeBoard() {
     saveGameButton.addEventListener("click", saveGame);
     loadGameButton.addEventListener("click", loadGame);
     openScoreBoardButton.addEventListener("click", showModalScoreBoard);
+    // TableSorter.makeSortable(tableScoreBoard);
+    headDate.onclick = orderByDate;
+    headLoser.onclick = orderByLoserPoints;
+    headWinner.onclick = orderByWinnerPoints;
 }
 
 function showModalNames() {
@@ -54,6 +111,8 @@ function showModalNames() {
 
 function showModalScoreBoard() {
 
+    initializeFilters();
+
     bodyScoreBoard.innerHTML = "";
     let scoreBoard = [];
 
@@ -61,20 +120,7 @@ function showModalScoreBoard() {
         scoreBoard = getScoreBoard();
     }
 
-    scoreBoard.forEach(score => {
-
-        let rowTable = createRowTable();
-
-        for (let property in score) {
-
-            let appendElement = score[property];
-
-            let cellTable = createCelltable(appendElement);
-            rowTable.appendChild(cellTable);
-        }
-
-        bodyScoreBoard.appendChild(rowTable);
-    });
+    createScoreTable(scoreBoard);    
 
     modalScoreBoard.style.display = "block";
 }
@@ -245,8 +291,6 @@ function loadGame() {
         return;
     }
 
-    console.log(loadedGame)
-
     game = loadedGame;
 
     ClearTurnElement();
@@ -287,4 +331,109 @@ function saveScore(winner, loser) {
 
 function getScoreBoard(){
     return JSON.parse(localStorage.getItem(scoreBoardKey));
+}
+
+function orderByDate() {
+
+    bodyScoreBoard.innerHTML = "";
+
+    let scoreBoard = [];
+
+    if (getScoreBoard()){
+        scoreBoard = getScoreBoard();
+    }
+    
+    if (isHigherDate) {
+        scoreBoard.sort((a, b) => {
+
+            if (a.date > b.date)
+                return 1;
+
+            if (a.date < b.date)
+                return -1;
+
+            return 0;
+        });
+    }
+    else {
+        scoreBoard.sort((a, b) => {
+
+            if (a.date < b.date)
+                return 1;
+
+            if (a.date > b.date)
+                return -1;
+
+            return 0;
+        });
+    }
+
+    createScoreTable(scoreBoard);
+
+    isHigherDate = !isHigherDate;
+}
+
+function orderByWinnerPoints() {
+
+    bodyScoreBoard.innerHTML = "";
+
+    let scoreBoard = [];
+
+    if (getScoreBoard()){
+        scoreBoard = getScoreBoard();
+    }
+
+    if (isHigherWinner)
+        scoreBoard.sort((a, b) => a.winnerPoints - b.winnerPoints);
+    else
+        scoreBoard.sort((a, b) => b.winnerPoints - a.winnerPoints);
+
+    createScoreTable(scoreBoard);
+
+    isHigherWinner = !isHigherWinner;
+}
+
+function orderByLoserPoints() {
+
+    bodyScoreBoard.innerHTML = "";
+
+    let scoreBoard = [];
+
+    if (getScoreBoard()){
+        scoreBoard = getScoreBoard();
+    }
+
+    if (isHigherLoser)
+        scoreBoard.sort((a, b) => a.loserPoints - b.loserPoints);
+    else
+        scoreBoard.sort((a, b) => b.loserPoints - a.loserPoints);
+
+    createScoreTable(scoreBoard);
+
+    isHigherLoser = !isHigherLoser;
+}
+
+function initializeFilters() {
+
+    isHigherDate = false;
+    isHigherLoser = false;
+    isHigherWinner = false;
+}
+
+function createScoreTable(scoreBoard) {
+
+    scoreBoard.forEach(score => {
+
+        let rowTable = createRowTable();
+
+        for (let property in score) {
+
+            let appendElement = score[property];
+
+            let cellTable = createCelltable(appendElement);
+            rowTable.appendChild(cellTable);
+        }
+
+        bodyScoreBoard.appendChild(rowTable);
+    });
 }

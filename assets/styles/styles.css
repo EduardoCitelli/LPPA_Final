@@ -271,3 +271,8 @@ a {
       margin-left: auto;
       margin-right: 1rem;
   }
+
+  .fas {
+      margin-left: 1rem;
+      cursor: pointer;
+  }

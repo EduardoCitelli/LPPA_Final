@@ -11,6 +11,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
+    <!-- <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous" integrity="sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V"></script> -->
+    <link
+    rel="stylesheet"
+    href="https://use.fontawesome.com/releases/v5.13.0/css/all.css"
+    integrity="sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V"
+    crossorigin="anonymous"
+  />
     <script type="text/javascript" src="assets/scripts/boardCreation.js" async></script>
     <script type="text/javascript" src="assets/scripts/move.js" async></script>
     <script type="text/javascript" src="assets/scripts/modal.js" async></script>
@@ -165,14 +172,14 @@
 
             <div class="modal-body">
                 <div class="table-points">
-                    <table class="table-players">
+                    <table id="score-board-table" class="table-players">
                         <thead>
                             <tr>
-                                <th>Fecha</th>
+                                <th>Fecha <i id="head-date" class="fas fa-sort"></i></th>
                                 <th>Ganador</th>
-                                <th>Puntaje</th>
+                                <th>Puntaje <i id="head-winner-points" class="fas fa-sort"></i></th>
                                 <th>Perdedor</th>
-                                <th>Puntaje</th>
+                                <th>Puntaje <i id="head-loser-points" class="fas fa-sort"></i></th>
                             </tr>
                         </thead>
                         <tbody id="body-score-board">
@@ -196,7 +203,6 @@
 
         <a href="https://github.com/EduardoCitelli/LPPA_Final" target="_blank" class="github">
             <img src="https://github.githubassets.com/images/modules/site/icons/footer/github-mark.svg">
-            <span class="sr-only"></span>
           </a>
     </footer>
 
