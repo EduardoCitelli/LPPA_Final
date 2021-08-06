@@ -6,9 +6,8 @@ const tablePlayer = document.getElementById('points'),
     points1 = document.getElementById("points-1"),
     points2 = document.getElementById("points-2"),
     saveGameButton = document.getElementById("save-game"),
-    loadGameButton = document.getElementById("load-game");
-
-var winSound = document.getElementById("sound");
+    loadGameButton = document.getElementById("load-game"),
+    winSound = document.getElementById("sound");
 
 window.onload = async () => InitializeBoard();
 
