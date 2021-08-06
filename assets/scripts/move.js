@@ -157,12 +157,12 @@ function checkDistance() {
 
 function enemyJumped() {
 
-    let
-        middleRow = game.moveObject.row2 + ((game.moveObject.row1 - game.moveObject.row2) / 2),
+    let middleRow = game.moveObject.row2 + ((game.moveObject.row1 - game.moveObject.row2) / 2),
         middleCol = game.moveObject.col2 + ((game.moveObject.col1 - game.moveObject.col2) / 2),
         otherPlayer = game.turn === 1 ? 2 : 1,
         otherPlayerQueen = game.turn === 1 ? 4 : 3;
-        hasEnemyPice = game.stateGame[middleRow][middleCol] === otherPlayer || game.stateGame[middleRow][middleCol] === otherPlayerQueen;
+
+    let hasEnemyPice = game.stateGame[middleRow][middleCol] === otherPlayer || game.stateGame[middleRow][middleCol] === otherPlayerQueen;
 
     if (hasEnemyPice) {
         enemyPieceJumped.push(middleRow);

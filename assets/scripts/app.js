@@ -1,141 +1,28 @@
-// var TableSorter = {
-//     makeSortable: function(table){
-
-//         var _this = this;
-
-//         var th = table.tHead, i;
-
-//         th && (th = th.rows[0]) && (th = th.cells);
-
-//         if (th)
-//             i = th.length;
-//         else
-//             return;        
-
-//         while (--i >= 0) (function (i) {
-
-//             var dir = 1;
-
-//             th[i].addEventListener('click', function () {
-//                 _this._sort(table, i, (dir = 1 - dir));
-//             });
-//         }(i));
-//     },
-//     _sort: function (table, col, reverse) {
-//         var tb = table.tBodies[0],
-//         tr = Array.prototype.slice.call(tb.rows, 0),
-//         i;
-
-//         reverse = -((+reverse) || -1);
-
-//         tr = tr.sort(function (a, b) {
-
-//             return reverse * (
-
-//                 a.cells[col].textContent.trim().localeCompare(
-//                     b.cells[col].textContent.trim()
-//                 )
-//             );
-//         });
-
-//         for(i = 0; i < tr.length; ++i){
-//             tb.appendChild(tr[i]);
-//         }
-//     }
-// };
-
-var isHigherDate = false,
-    isHigherLoser = false,
-    isHigherWinner = false;
-
-const gameSavedKey = "game-saved",
-      scoreBoardKey = "score-board",
-      tablePlayer = document.getElementById('points'),
-      turnElement = document.getElementById("turnText"),
-      newGameButton = document.getElementById("newGameButton"),
-      points1 = document.getElementById("points-1"),
-      points2 = document.getElementById("points-2"),
-      modalPlayers = document.getElementById("modal-players"),
-      saveName = document.getElementById("save-names"),
-      namePlayer1 = document.getElementById("player1-name"),
-      namePlayer2 = document.getElementById("player2-name"),
-      closeName = document.getElementById("closeModalPlayer"),
-      name1 = document.getElementById("name-1"),
-      name2 = document.getElementById("name-2"),
-      saveGameButton = document.getElementById("save-game"),
-      loadGameButton = document.getElementById("load-game"),
-      modalScoreBoard = document.getElementById("modal-score-board"),
-      openScoreBoardButton = document.getElementById("board-score-button"),
-      closeScoreBoardButton = document.getElementById("close-modal-score-board"),
-      aceptScoreBoardButton = document.getElementById("acept-button"),
-      bodyScoreBoard = document.getElementById("body-score-board"),
-      tableScoreBoard = document.getElementById("score-board-table"),
-      headDate = document.getElementById("head-date"),
-      headWinner = document.getElementById("head-winner-points"),
-      headLoser = document.getElementById("head-loser-points");
+const tablePlayer = document.getElementById('points'),
+    turnElement = document.getElementById("turnText"),
+    newGameButton = document.getElementById("newGameButton"),
+    name1 = document.getElementById("name-1"),
+    name2 = document.getElementById("name-2"),
+    points1 = document.getElementById("points-1"),
+    points2 = document.getElementById("points-2"),
+    saveGameButton = document.getElementById("save-game"),
+    loadGameButton = document.getElementById("load-game");
 
 window.onload = async () => InitializeBoard();
 
-closeName.onclick = closeModalPlayers;
-closeScoreBoardButton.onclick = closeModalScoreBoard;
-aceptScoreBoardButton.onclick = closeModalScoreBoard;
-
-function closeModalPlayers() {
-    modalPlayers.style.display = "none";
-}
-
-function closeModalScoreBoard() {
-    modalScoreBoard.style.display = "none";
-}
-
-async function InitializeBoard() {   
+async function InitializeBoard() {
 
     newBoard();
 
+    initializeScoreBoardElements();
+    initializeNewGameElements();
+    initializeIndexElements();
+}
+
+function initializeIndexElements() {
     newGameButton.addEventListener("click", showModalNames);
-    saveName.addEventListener("click", InitializeTurn);
     saveGameButton.addEventListener("click", saveGame);
     loadGameButton.addEventListener("click", loadGame);
-    openScoreBoardButton.addEventListener("click", showModalScoreBoard);
-    // TableSorter.makeSortable(tableScoreBoard);
-    headDate.onclick = orderByDate;
-    headLoser.onclick = orderByLoserPoints;
-    headWinner.onclick = orderByWinnerPoints;
-}
-
-function showModalNames() {
-
-    cleanModal();
-    modalPlayers.style.display = "block";
-}
-
-function showModalScoreBoard() {
-
-    initializeFilters();
-
-    bodyScoreBoard.innerHTML = "";
-    let scoreBoard = [];
-
-    if (getScoreBoard()){
-        scoreBoard = getScoreBoard();
-    }
-
-    createScoreTable(scoreBoard);    
-
-    modalScoreBoard.style.display = "block";
-}
-
-function createRowTable() {
-    let row = document.createElement("tr");
-    return row;
-}
-
-function createCelltable(appendElement) {
-
-    let cell = document.createElement("td");
-    cell.innerText = appendElement;
-
-    return cell;
 }
 
 function InitializeTurn(event) {
@@ -174,11 +61,8 @@ function InitializeTurn(event) {
     saveGameButton.style.display = "flex";
 
     setNames();
-
     createAndAppendTurnText();
-
     newBoard();
-
     closeModalPlayers();
 }
 
@@ -188,6 +72,7 @@ function newBoard() {
 }
 
 async function clearBoard() {
+
     game.moveObject = {};
     game.turn = 0;
 
@@ -211,7 +96,7 @@ async function checkTurn(isLoadGame) {
 
         let winner, loser;
 
-        if (game.turn === 1){
+        if (game.turn === 1) {
             winner = game.players.player1;
             loser = game.players.player2;
         }
@@ -275,7 +160,7 @@ function setNames() {
 
 function saveGame() {
 
-    localStorage.setItem(gameSavedKey, JSON.stringify(game));
+    saveGameLocal();
 
     setTimeout(() => {
         alert("Juego Guardado");
@@ -284,7 +169,7 @@ function saveGame() {
 
 function loadGame() {
 
-    let loadedGame = JSON.parse(localStorage.getItem(gameSavedKey));
+    let loadedGame = loadGameLocal();
 
     if (!loadedGame) {
         alert("No hay partidas guardadas");
@@ -320,120 +205,10 @@ function saveScore(winner, loser) {
 
     let scoreBoard = [];
 
-    if (getScoreBoard()){
+    if (getScoreBoard())
         scoreBoard = getScoreBoard();
-    }
 
     scoreBoard.push(score);
 
-    localStorage.setItem(scoreBoardKey, JSON.stringify(scoreBoard));
-}
-
-function getScoreBoard(){
-    return JSON.parse(localStorage.getItem(scoreBoardKey));
-}
-
-function orderByDate() {
-
-    bodyScoreBoard.innerHTML = "";
-
-    let scoreBoard = [];
-
-    if (getScoreBoard()){
-        scoreBoard = getScoreBoard();
-    }
-    
-    if (isHigherDate) {
-        scoreBoard.sort((a, b) => {
-
-            if (a.date > b.date)
-                return 1;
-
-            if (a.date < b.date)
-                return -1;
-
-            return 0;
-        });
-    }
-    else {
-        scoreBoard.sort((a, b) => {
-
-            if (a.date < b.date)
-                return 1;
-
-            if (a.date > b.date)
-                return -1;
-
-            return 0;
-        });
-    }
-
-    createScoreTable(scoreBoard);
-
-    isHigherDate = !isHigherDate;
-}
-
-function orderByWinnerPoints() {
-
-    bodyScoreBoard.innerHTML = "";
-
-    let scoreBoard = [];
-
-    if (getScoreBoard()){
-        scoreBoard = getScoreBoard();
-    }
-
-    if (isHigherWinner)
-        scoreBoard.sort((a, b) => a.winnerPoints - b.winnerPoints);
-    else
-        scoreBoard.sort((a, b) => b.winnerPoints - a.winnerPoints);
-
-    createScoreTable(scoreBoard);
-
-    isHigherWinner = !isHigherWinner;
-}
-
-function orderByLoserPoints() {
-
-    bodyScoreBoard.innerHTML = "";
-
-    let scoreBoard = [];
-
-    if (getScoreBoard()){
-        scoreBoard = getScoreBoard();
-    }
-
-    if (isHigherLoser)
-        scoreBoard.sort((a, b) => a.loserPoints - b.loserPoints);
-    else
-        scoreBoard.sort((a, b) => b.loserPoints - a.loserPoints);
-
-    createScoreTable(scoreBoard);
-
-    isHigherLoser = !isHigherLoser;
-}
-
-function initializeFilters() {
-
-    isHigherDate = false;
-    isHigherLoser = false;
-    isHigherWinner = false;
-}
-
-function createScoreTable(scoreBoard) {
-
-    scoreBoard.forEach(score => {
-
-        let rowTable = createRowTable();
-
-        for (let property in score) {
-
-            let appendElement = score[property];
-
-            let cellTable = createCelltable(appendElement);
-            rowTable.appendChild(cellTable);
-        }
-
-        bodyScoreBoard.appendChild(rowTable);
-    });
+    saveScoreLocal(scoreBoard);
 }
