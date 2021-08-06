@@ -10,7 +10,6 @@ function initializeMassageModal() {
 }
 
 function showMessageModal(messageText) {
-    console.log(messageText);
     message.innerText = messageText;
     messageModal.style.display = "block";
 }
