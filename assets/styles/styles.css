@@ -236,6 +236,9 @@ a {
     border-top: var(--border-menu);
     background: var(--bar-color);
     display: flex;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }
 
 .footer p {
