@@ -65,7 +65,7 @@ function selectCell() {
         game.moveObject = {};
 
         if (move) {
-            updateBoard();
+            updateBoard(false);
         }
     }
 }

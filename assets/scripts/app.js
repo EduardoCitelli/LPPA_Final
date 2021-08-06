@@ -154,12 +154,12 @@ async function clearBoard() {
     newBoard();
 }
 
-async function updateBoard() {
+async function updateBoard(isLoadGame) {
     await createBoard();
-    await checkTurn();
+    await checkTurn(isLoadGame);
 }
 
-async function checkTurn() {
+async function checkTurn(isLoadGame) {
 
     if (checkWinner()) {
 
@@ -182,7 +182,8 @@ async function checkTurn() {
         return;
     }
 
-    game.turn = game.turn === 1 ? 2 : 1;
+    if (!isLoadGame)
+        game.turn = game.turn === 1 ? 2 : 1;
 
     ClearTurnElement();
 
@@ -244,6 +245,8 @@ function loadGame() {
         return;
     }
 
+    console.log(loadedGame)
+
     game = loadedGame;
 
     ClearTurnElement();
@@ -254,7 +257,7 @@ function loadGame() {
 
     setNames();
     createAndAppendTurnText();
-    updateBoard();
+    updateBoard(true);
 
     setTimeout(() => {
         alert('Juego Cargado');
