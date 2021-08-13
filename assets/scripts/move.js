@@ -112,7 +112,7 @@ function checkDestination() {
     let cellWithPiece = game.stateGame[game.moveObject.row2][game.moveObject.col2] !== 0;
 
     if (cellWithPiece) {
-        messageModal('Elige un lugar que esté vacio');
+        showMessageModal('Elige un lugar que esté vacio');
         return false;
     }
 
@@ -132,7 +132,7 @@ function checkDirection() {
         playerTwoWrongDirection = game.turn === 2 && game.moveObject.row2 < game.moveObject.row1;
 
     if (playerOneWrongDirection || playerTwoWrongDirection) {
-        messageModal('Ir para la otra dirección');
+        showMessageModal('Ir para la otra dirección');
         return false;
     }
 
@@ -151,7 +151,7 @@ function checkDistance() {
         return true;
     }
 
-    messageModal('Movimiento Invalido');
+    showMessageModal('Movimiento Invalido');
     return false;
 };
 
